@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HFCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdMedia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Goal">
+          <Key>
+            <PropertyRef Name="goalId" />
+          </Key>
+          <Property Name="goalId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ImageDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="path" Type="varchar" MaxLength="200" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="RegGoals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="regId" Type="int" />
+          <Property Name="goalId" Type="int" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="regId" />
+          </Key>
+          <Property Name="regId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="50" />
+          <Property Name="lname" Type="varchar" MaxLength="50" />
+          <Property Name="gender" Type="bit" />
+          <Property Name="dob" Type="date" />
+          <Property Name="contactNo" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar" MaxLength="200" />
+          <Property Name="trainings" Type="int" />
+          <Property Name="goals" Type="int" />
+          <Property Name="timeSlot" Type="int" />
+          <Property Name="adMedia" Type="int" />
+          <Property Name="imageId" Type="int" />
+          <Property Name="repId" Type="int" />
+          <Property Name="registeredOn" Type="datetime" />
+          <Property Name="lastChangedOn" Type="datetime" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="RegTraining">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="regId" Type="int" />
+          <Property Name="trainingId" Type="int" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TimeSlot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="tokenId" />
+          </Key>
+          <Property Name="tokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="int" />
+          <Property Name="authToken" Type="varchar" MaxLength="50" />
+          <Property Name="issuedOn" Type="datetime" />
+          <Property Name="expiresOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="trainingId" />
+          </Key>
+          <Property Name="trainingId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="accessLevel" Type="int" />
+        </EntityType>
+        <Association Name="FK_RegGoals_Goal">
+          <End Role="Goal" Type="Self.Goal" Multiplicity="0..1" />
+          <End Role="RegGoals" Type="Self.RegGoals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goal">
+              <PropertyRef Name="goalId" />
+            </Principal>
+            <Dependent Role="RegGoals">
+              <PropertyRef Name="goalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_AdMedia">
+          <End Role="AdMedia" Type="Self.AdMedia" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdMedia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="adMedia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_ImageDetail">
+          <End Role="ImageDetail" Type="Self.ImageDetail" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="imageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_RegGoals">
+          <End Role="RegGoals" Type="Self.RegGoals" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegGoals">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="goals" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_RegTraining">
+          <End Role="RegTraining" Type="Self.RegTraining" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegTraining">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="trainings" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_TimeSlot">
+          <End Role="TimeSlot" Type="Self.TimeSlot" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSlot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="timeSlot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="repId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegTraining_Training">
+          <End Role="Training" Type="Self.Training" Multiplicity="0..1" />
+          <End Role="RegTraining" Type="Self.RegTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="trainingId" />
+            </Principal>
+            <Dependent Role="RegTraining">
+              <PropertyRef Name="trainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Token_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HFCModelStoreContainer">
+          <EntitySet Name="AdMedia" EntityType="Self.AdMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Goal" EntityType="Self.Goal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageDetail" EntityType="Self.ImageDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegGoals" EntityType="Self.RegGoals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegTraining" EntityType="Self.RegTraining" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeSlot" EntityType="Self.TimeSlot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Training" EntityType="Self.Training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RegGoals_Goal" Association="Self.FK_RegGoals_Goal">
+            <End Role="Goal" EntitySet="Goal" />
+            <End Role="RegGoals" EntitySet="RegGoals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_AdMedia" Association="Self.FK_Registration_AdMedia">
+            <End Role="AdMedia" EntitySet="AdMedia" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_ImageDetail" Association="Self.FK_Registration_ImageDetail">
+            <End Role="ImageDetail" EntitySet="ImageDetail" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_RegGoals" Association="Self.FK_Registration_RegGoals">
+            <End Role="RegGoals" EntitySet="RegGoals" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_RegTraining" Association="Self.FK_Registration_RegTraining">
+            <End Role="RegTraining" EntitySet="RegTraining" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Status" Association="Self.FK_Registration_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_TimeSlot" Association="Self.FK_Registration_TimeSlot">
+            <End Role="TimeSlot" EntitySet="TimeSlot" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_User" Association="Self.FK_Registration_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegTraining_Training" Association="Self.FK_RegTraining_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="RegTraining" EntitySet="RegTraining" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_User" Association="Self.FK_Token_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HFCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FitnessClubDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdMedias" EntityType="HFCModel.AdMedia" />
+          <EntitySet Name="Goals" EntityType="HFCModel.Goal" />
+          <EntitySet Name="ImageDetails" EntityType="HFCModel.ImageDetail" />
+          <EntitySet Name="RegGoals" EntityType="HFCModel.RegGoal" />
+          <EntitySet Name="Registrations" EntityType="HFCModel.Registration" />
+          <EntitySet Name="RegTrainings" EntityType="HFCModel.RegTraining" />
+          <EntitySet Name="Status" EntityType="HFCModel.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="HFCModel.sysdiagram" />
+          <EntitySet Name="TimeSlots" EntityType="HFCModel.TimeSlot" />
+          <EntitySet Name="Tokens" EntityType="HFCModel.Token" />
+          <EntitySet Name="Trainings" EntityType="HFCModel.Training" />
+          <EntitySet Name="Users" EntityType="HFCModel.User" />
+          <AssociationSet Name="FK_Registration_AdMedia" Association="HFCModel.FK_Registration_AdMedia">
+            <End Role="AdMedia" EntitySet="AdMedias" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegGoals_Goal" Association="HFCModel.FK_RegGoals_Goal">
+            <End Role="Goal" EntitySet="Goals" />
+            <End Role="RegGoal" EntitySet="RegGoals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_ImageDetail" Association="HFCModel.FK_Registration_ImageDetail">
+            <End Role="ImageDetail" EntitySet="ImageDetails" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_RegGoals" Association="HFCModel.FK_Registration_RegGoals">
+            <End Role="RegGoal" EntitySet="RegGoals" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_RegTraining" Association="HFCModel.FK_Registration_RegTraining">
+            <End Role="RegTraining" EntitySet="RegTrainings" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Status" Association="HFCModel.FK_Registration_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_TimeSlot" Association="HFCModel.FK_Registration_TimeSlot">
+            <End Role="TimeSlot" EntitySet="TimeSlots" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_User" Association="HFCModel.FK_Registration_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegTraining_Training" Association="HFCModel.FK_RegTraining_Training">
+            <End Role="Training" EntitySet="Trainings" />
+            <End Role="RegTraining" EntitySet="RegTrainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_User" Association="HFCModel.FK_Token_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Token" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AdMedia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_AdMedia" FromRole="AdMedia" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Goal">
+          <Key>
+            <PropertyRef Name="goalId" />
+          </Key>
+          <Property Name="goalId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RegGoals" Relationship="HFCModel.FK_RegGoals_Goal" FromRole="Goal" ToRole="RegGoal" />
+        </EntityType>
+        <EntityType Name="ImageDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_ImageDetail" FromRole="ImageDetail" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="RegGoal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="regId" Type="Int32" />
+          <Property Name="goalId" Type="Int32" />
+          <NavigationProperty Name="Goal" Relationship="HFCModel.FK_RegGoals_Goal" FromRole="RegGoal" ToRole="Goal" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_RegGoals" FromRole="RegGoal" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="regId" />
+          </Key>
+          <Property Name="regId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="dob" Type="DateTime" Precision="0" />
+          <Property Name="contactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="trainings" Type="Int32" />
+          <Property Name="goals" Type="Int32" />
+          <Property Name="timeSlot" Type="Int32" />
+          <Property Name="adMedia" Type="Int32" />
+          <Property Name="imageId" Type="Int32" />
+          <Property Name="repId" Type="Int32" />
+          <Property Name="registeredOn" Type="DateTime" Precision="3" />
+          <Property Name="lastChangedOn" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="AdMedia1" Relationship="HFCModel.FK_Registration_AdMedia" FromRole="Registration" ToRole="AdMedia" />
+          <NavigationProperty Name="ImageDetail" Relationship="HFCModel.FK_Registration_ImageDetail" FromRole="Registration" ToRole="ImageDetail" />
+          <NavigationProperty Name="RegGoal" Relationship="HFCModel.FK_Registration_RegGoals" FromRole="Registration" ToRole="RegGoal" />
+          <NavigationProperty Name="RegTraining" Relationship="HFCModel.FK_Registration_RegTraining" FromRole="Registration" ToRole="RegTraining" />
+          <NavigationProperty Name="Status1" Relationship="HFCModel.FK_Registration_Status" FromRole="Registration" ToRole="Status" />
+          <NavigationProperty Name="TimeSlot1" Relationship="HFCModel.FK_Registration_TimeSlot" FromRole="Registration" ToRole="TimeSlot" />
+          <NavigationProperty Name="User" Relationship="HFCModel.FK_Registration_User" FromRole="Registration" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RegTraining">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="regId" Type="Int32" />
+          <Property Name="trainingId" Type="Int32" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_RegTraining" FromRole="RegTraining" ToRole="Registration" />
+          <NavigationProperty Name="Training" Relationship="HFCModel.FK_RegTraining_Training" FromRole="RegTraining" ToRole="Training" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_Status" FromRole="Status" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TimeSlot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_TimeSlot" FromRole="TimeSlot" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="tokenId" />
+          </Key>
+          <Property Name="tokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="authToken" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="issuedOn" Type="DateTime" Precision="3" />
+          <Property Name="expiresOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HFCModel.FK_Token_User" FromRole="Token" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="trainingId" />
+          </Key>
+          <Property Name="trainingId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RegTrainings" Relationship="HFCModel.FK_RegTraining_Training" FromRole="Training" ToRole="RegTraining" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="accessLevel" Type="Int32" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_User" FromRole="User" ToRole="Registration" />
+          <NavigationProperty Name="Tokens" Relationship="HFCModel.FK_Token_User" FromRole="User" ToRole="Token" />
+        </EntityType>
+        <Association Name="FK_Registration_AdMedia">
+          <End Type="HFCModel.AdMedia" Role="AdMedia" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdMedia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="adMedia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegGoals_Goal">
+          <End Type="HFCModel.Goal" Role="Goal" Multiplicity="0..1" />
+          <End Type="HFCModel.RegGoal" Role="RegGoal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Goal">
+              <PropertyRef Name="goalId" />
+            </Principal>
+            <Dependent Role="RegGoal">
+              <PropertyRef Name="goalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_ImageDetail">
+          <End Type="HFCModel.ImageDetail" Role="ImageDetail" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="imageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_RegGoals">
+          <End Type="HFCModel.RegGoal" Role="RegGoal" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegGoal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="goals" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_RegTraining">
+          <End Type="HFCModel.RegTraining" Role="RegTraining" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegTraining">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="trainings" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Status">
+          <End Type="HFCModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_TimeSlot">
+          <End Type="HFCModel.TimeSlot" Role="TimeSlot" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSlot">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="timeSlot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_User">
+          <End Type="HFCModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HFCModel.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="repId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegTraining_Training">
+          <End Type="HFCModel.Training" Role="Training" Multiplicity="0..1" />
+          <End Type="HFCModel.RegTraining" Role="RegTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="trainingId" />
+            </Principal>
+            <Dependent Role="RegTraining">
+              <PropertyRef Name="trainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Token_User">
+          <End Type="HFCModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HFCModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HFCModelStoreContainer" CdmEntityContainer="FitnessClubDbEntities">
+          <EntitySetMapping Name="AdMedias">
+            <EntityTypeMapping TypeName="HFCModel.AdMedia">
+              <MappingFragment StoreEntitySet="AdMedia">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goals">
+            <EntityTypeMapping TypeName="HFCModel.Goal">
+              <MappingFragment StoreEntitySet="Goal">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="goalId" ColumnName="goalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageDetails">
+            <EntityTypeMapping TypeName="HFCModel.ImageDetail">
+              <MappingFragment StoreEntitySet="ImageDetail">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegGoals">
+            <EntityTypeMapping TypeName="HFCModel.RegGoal">
+              <MappingFragment StoreEntitySet="RegGoals">
+                <ScalarProperty Name="goalId" ColumnName="goalId" />
+                <ScalarProperty Name="regId" ColumnName="regId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="HFCModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="lastChangedOn" ColumnName="lastChangedOn" />
+                <ScalarProperty Name="registeredOn" ColumnName="registeredOn" />
+                <ScalarProperty Name="repId" ColumnName="repId" />
+                <ScalarProperty Name="imageId" ColumnName="imageId" />
+                <ScalarProperty Name="adMedia" ColumnName="adMedia" />
+                <ScalarProperty Name="timeSlot" ColumnName="timeSlot" />
+                <ScalarProperty Name="goals" ColumnName="goals" />
+                <ScalarProperty Name="trainings" ColumnName="trainings" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contactNo" ColumnName="contactNo" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="regId" ColumnName="regId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegTrainings">
+            <EntityTypeMapping TypeName="HFCModel.RegTraining">
+              <MappingFragment StoreEntitySet="RegTraining">
+                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
+                <ScalarProperty Name="regId" ColumnName="regId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="HFCModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HFCModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeSlots">
+            <EntityTypeMapping TypeName="HFCModel.TimeSlot">
+              <MappingFragment StoreEntitySet="TimeSlot">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="HFCModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="expiresOn" ColumnName="expiresOn" />
+                <ScalarProperty Name="issuedOn" ColumnName="issuedOn" />
+                <ScalarProperty Name="authToken" ColumnName="authToken" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="tokenId" ColumnName="tokenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainings">
+            <EntityTypeMapping TypeName="HFCModel.Training">
+              <MappingFragment StoreEntitySet="Training">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HFCModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="accessLevel" ColumnName="accessLevel" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
