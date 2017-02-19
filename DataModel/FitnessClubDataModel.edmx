@@ -98,10 +98,10 @@
             <PropertyRef Name="tokenId" />
           </Key>
           <Property Name="tokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="userId" Type="int" />
-          <Property Name="authToken" Type="varchar" MaxLength="50" />
-          <Property Name="issuedOn" Type="datetime" />
-          <Property Name="expiresOn" Type="datetime" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="authToken" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="issuedOn" Type="datetime" Nullable="false" />
+          <Property Name="expiresOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Training">
           <Key>
@@ -230,7 +230,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Token_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Token" Type="Self.Token" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -300,12 +300,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="HFCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="FitnessClubDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RegTrainings" EntityType="HFCModel.RegTraining" />
           <EntitySet Name="AdMedias" EntityType="HFCModel.AdMedia" />
           <EntitySet Name="Goals" EntityType="HFCModel.Goal" />
           <EntitySet Name="ImageDetails" EntityType="HFCModel.ImageDetail" />
           <EntitySet Name="RegGoals" EntityType="HFCModel.RegGoal" />
           <EntitySet Name="Registrations" EntityType="HFCModel.Registration" />
-          <EntitySet Name="RegTrainings" EntityType="HFCModel.RegTraining" />
           <EntitySet Name="Status" EntityType="HFCModel.Status" />
           <EntitySet Name="sysdiagrams" EntityType="HFCModel.sysdiagram" />
           <EntitySet Name="TimeSlots" EntityType="HFCModel.TimeSlot" />
@@ -352,7 +352,17 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Token" EntitySet="Tokens" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
+        <EntityType Name="RegTraining">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="regId" Type="Int32" />
+          <Property Name="trainingId" Type="Int32" />
+          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_RegTraining" FromRole="RegTraining" ToRole="Registration" />
+          <NavigationProperty Name="Training" Relationship="HFCModel.FK_RegTraining_Training" FromRole="RegTraining" ToRole="Training" />
+          </EntityType>
         <EntityType Name="AdMedia">
           <Key>
             <PropertyRef Name="id" />
@@ -419,16 +429,6 @@
           <NavigationProperty Name="TimeSlot1" Relationship="HFCModel.FK_Registration_TimeSlot" FromRole="Registration" ToRole="TimeSlot" />
           <NavigationProperty Name="User" Relationship="HFCModel.FK_Registration_User" FromRole="Registration" ToRole="User" />
         </EntityType>
-        <EntityType Name="RegTraining">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="regId" Type="Int32" />
-          <Property Name="trainingId" Type="Int32" />
-          <NavigationProperty Name="Registrations" Relationship="HFCModel.FK_Registration_RegTraining" FromRole="RegTraining" ToRole="Registration" />
-          <NavigationProperty Name="Training" Relationship="HFCModel.FK_RegTraining_Training" FromRole="RegTraining" ToRole="Training" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="id" />
@@ -462,10 +462,10 @@
             <PropertyRef Name="tokenId" />
           </Key>
           <Property Name="tokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="authToken" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="issuedOn" Type="DateTime" Precision="3" />
-          <Property Name="expiresOn" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="authToken" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="issuedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expiresOn" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="HFCModel.FK_Token_User" FromRole="Token" ToRole="User" />
         </EntityType>
         <EntityType Name="Training">
@@ -598,7 +598,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Token_User">
-          <End Type="HFCModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HFCModel.User" Role="User" Multiplicity="1" />
           <End Type="HFCModel.Token" Role="Token" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -609,12 +609,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HFCModelStoreContainer" CdmEntityContainer="FitnessClubDbEntities">
+          <EntitySetMapping Name="RegTrainings">
+            <EntityTypeMapping TypeName="HFCModel.RegTraining">
+              <MappingFragment StoreEntitySet="RegTraining">
+                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
+                <ScalarProperty Name="regId" ColumnName="regId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AdMedias">
             <EntityTypeMapping TypeName="HFCModel.AdMedia">
               <MappingFragment StoreEntitySet="AdMedia">
@@ -671,15 +680,6 @@
                 <ScalarProperty Name="lname" ColumnName="lname" />
                 <ScalarProperty Name="fname" ColumnName="fname" />
                 <ScalarProperty Name="regId" ColumnName="regId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RegTrainings">
-            <EntityTypeMapping TypeName="HFCModel.RegTraining">
-              <MappingFragment StoreEntitySet="RegTraining">
-                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
-                <ScalarProperty Name="regId" ColumnName="regId" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

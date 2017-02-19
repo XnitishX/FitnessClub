@@ -7,7 +7,12 @@ using BusinessEntities;
 
 namespace BusinessServices
 {
-    interface ITrainingServices
+    public interface ITrainingServices
     {
+        TrainingEntity GetTrainingById(int trainingId);
+        IEnumerable<TrainingEntity> GetAllTrainings();
+        int CreateTraining(TrainingEntity trainingEntity);
+        bool UpdateTraining(int trainingId, TrainingEntity trainingEntity);
+        bool DeleteTraining(int trainingId);
     }
 }

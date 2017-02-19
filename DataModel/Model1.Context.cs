@@ -25,12 +25,12 @@ namespace DataModel
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<RegTraining> RegTrainings { get; set; }
         public virtual DbSet<AdMedia> AdMedias { get; set; }
         public virtual DbSet<Goal> Goals { get; set; }
         public virtual DbSet<ImageDetail> ImageDetails { get; set; }
         public virtual DbSet<RegGoal> RegGoals { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
-        public virtual DbSet<RegTraining> RegTrainings { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }

@@ -15,10 +15,10 @@ namespace DataModel
     public partial class Token
     {
         public int tokenId { get; set; }
-        public Nullable<int> userId { get; set; }
+        public int userId { get; set; }
         public string authToken { get; set; }
-        public Nullable<System.DateTime> issuedOn { get; set; }
-        public Nullable<System.DateTime> expiresOn { get; set; }
+        public System.DateTime issuedOn { get; set; }
+        public System.DateTime expiresOn { get; set; }
     
         public virtual User User { get; set; }
     }

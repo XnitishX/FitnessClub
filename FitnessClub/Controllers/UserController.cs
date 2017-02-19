@@ -6,9 +6,15 @@ using System.Net.Http;
 using System.Web.Http;
 using BusinessServices;
 using BusinessEntities;
+using FitnessClub.Filters;
+using FitnessClub.ActionFilters;
+using WebApi.Filters;
 
 namespace FitnessClub.Controllers
 {
+    //[ApiAuthenticationFilter]
+
+    [AuthorizationRequired]
     [RoutePrefix("api/Users" )]
     public class UserController : ApiController
     {

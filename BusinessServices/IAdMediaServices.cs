@@ -10,10 +10,10 @@ namespace BusinessServices
 {
     public interface IAdMediaServices
     {
-        AdMedia GetAdMediaById(int adMediaId);
-        IEnumerable<AdMedia> GetAllAdMedia();
+        AdMediaEntity GetAdMediaById(int adMediaId);
+        IEnumerable<AdMediaEntity> GetAllAdMedia();
         int CreateAdMedia(AdMediaEntity adMediaEntity);
-        bool UpdateAdMediar(int userId, AdMediaEntity adMediaEntity);
+        bool UpdateAdMedia(int userId, AdMediaEntity adMediaEntity);
         bool DeleteAdMedia(int adMediaId);
     }
 }

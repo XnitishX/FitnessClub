@@ -27,7 +27,7 @@ namespace FitnessClub.Areas.HelpPage
     {
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
             MessageId = "FitnessClub.Areas.HelpPage.TextSample.#ctor(System.String)",
-            Justification = "End Users may choose to merge this string with existing localized resources.")]
+            Justification = "End users may choose to merge this string with existing localized resources.")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly",
             MessageId = "bsonspec",
             Justification = "Part of a URI.")]

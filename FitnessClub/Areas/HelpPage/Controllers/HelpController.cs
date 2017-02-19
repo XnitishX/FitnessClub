@@ -18,7 +18,7 @@ namespace FitnessClub.Areas.HelpPage.Controllers
         {
         }
 
-        public HelpController(HttpConfiguration config)
+        protected HelpController(HttpConfiguration config)
         {
             Configuration = config;
         }

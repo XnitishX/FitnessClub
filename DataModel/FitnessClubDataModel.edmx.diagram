@@ -4,26 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4c6ea71f3fd04045897aa52f5e7e3b6a" Name="Diagram1" ZoomLevel="65">
-        <EntityTypeShape EntityType="HFCModel.AdMedia" Width="1.5" PointX="0.75" PointY="28.375" />
-        <EntityTypeShape EntityType="HFCModel.Goal" Width="1.5" PointX="1.5" PointY="23.125" />
-        <EntityTypeShape EntityType="HFCModel.ImageDetail" Width="1.5" PointX="0.75" PointY="11" />
-        <EntityTypeShape EntityType="HFCModel.RegGoal" Width="1.5" PointX="0.75" PointY="20.125" />
+      <Diagram DiagramId="4c6ea71f3fd04045897aa52f5e7e3b6a" Name="Diagram1" ZoomLevel="67">
+        <AssociationConnector Association="HFCModel.FK_User_Training" />
+        <EntityTypeShape EntityType="HFCModel.AdMedia" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="HFCModel.Goal" Width="1.5" PointX="1.5" PointY="18.75" />
+        <EntityTypeShape EntityType="HFCModel.ImageDetail" Width="1.5" PointX="0.75" PointY="21.375" />
+        <EntityTypeShape EntityType="HFCModel.RegGoal" Width="1.5" PointX="0.75" PointY="15.625" />
         <EntityTypeShape EntityType="HFCModel.Registration" Width="1.5" PointX="3" PointY="2.75" />
-        <EntityTypeShape EntityType="HFCModel.User" Width="1.5" PointX="0.75" PointY="8.25" />
-        <EntityTypeShape EntityType="HFCModel.Status" Width="1.5" PointX="0.75" PointY="17.5" />
+        <EntityTypeShape EntityType="HFCModel.Status" Width="1.5" PointX="0.75" PointY="10.625" />
         <EntityTypeShape EntityType="HFCModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HFCModel.TimeSlot" Width="1.5" PointX="0.75" PointY="25.75" />
+        <EntityTypeShape EntityType="HFCModel.TimeSlot" Width="1.5" PointX="0.75" PointY="13.125" />
         <EntityTypeShape EntityType="HFCModel.Token" Width="1.5" PointX="3" PointY="10.875" />
-        <EntityTypeShape EntityType="HFCModel.Training" Width="1.5" PointX="0.875" PointY="14.125" />
+        <EntityTypeShape EntityType="HFCModel.Training" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HFCModel.User" Width="1.5" PointX="0.75" PointY="4.375" />
         <AssociationConnector Association="HFCModel.FK_Registration_AdMedia" />
         <AssociationConnector Association="HFCModel.FK_RegGoals_Goal" />
         <AssociationConnector Association="HFCModel.FK_Registration_ImageDetail" />
         <AssociationConnector Association="HFCModel.FK_Registration_RegGoals" />
-        <AssociationConnector Association="HFCModel.FK_Registration_User" />
         <AssociationConnector Association="HFCModel.FK_Registration_Status" />
         <AssociationConnector Association="HFCModel.FK_Registration_TimeSlot" />
-        <AssociationConnector Association="HFCModel.FK_User_Training" />
+        <AssociationConnector Association="HFCModel.FK_Registration_User" />
         <AssociationConnector Association="HFCModel.FK_Token_User" />
       </Diagram>
     </edmx:Diagrams>

@@ -106,7 +106,7 @@ namespace DataModel.UnitOfWork
         }
 
         /// <summary>
-        /// Get/Set Property for User repository.
+        /// Get/Set Property for RegTraining repository.
         /// </summary>
         public GenericRepository<RegTraining> RegTrainingRepository
         {
@@ -121,7 +121,7 @@ namespace DataModel.UnitOfWork
         /// <summary>
         /// Get/Set Property for registration repository.
         /// </summary>
-        public GenericRepository<RegGoal> regGoalRepository
+        public GenericRepository<RegGoal> RegGoalRepository
         {
             get
             {

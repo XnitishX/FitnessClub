@@ -24,6 +24,16 @@ namespace BusinessServices
         IMapper mapper = new MapperConfiguration(cfg => {
             cfg.CreateMap<User, UserEntity>();
         }).CreateMapper();
+
+        public int Authenticate(string userName, string password)
+        {
+            var user = _unitOfWork.UserRepository.Get(u=>u.userName==userName&&u.password==password);
+            if(user!=null && user.userId>0)
+            {
+                return user.userId;
+            }
+            return 0;
+        }
         public UserEntity GetUserById(int userId)
         {
             

@@ -10,11 +10,11 @@ namespace BusinessServices
 {
     public interface IImageDetailServices
     {
-        ImageDetailEntity GetImageById(int imageId);
-        IEnumerable<ImageDetailEntity> GetAllImages();
-        int CreateImage(ImageDetailEntity imageEntity);
-        bool UpdateImage(int imageId, ImageDetailEntity imageEntity);
-        bool DeleteImage(int imageId);
+        ImageDetailEntity GetImageDetailById(int imageId);
+        IEnumerable<ImageDetailEntity> GetAllImageDetail();
+        int CreateImageDetail(ImageDetailEntity imageEntity);
+        bool UpdateImageDetail(int imageId, ImageDetailEntity imageEntity);
+        bool DeleteImageDetail(int imageId);
     }
 }
 
